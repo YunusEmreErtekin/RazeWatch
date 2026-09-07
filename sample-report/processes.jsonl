@@ -1,0 +1,2 @@
+{"Kind":"snapshot","Utc":"2026-01-01T00:00:00+00:00","Pid":100,"ParentPid":4,"Name":"EXCEL.EXE","Path":"C:\\Synthetic\\EXCEL.EXE","StartUtc":"2026-01-01T00:00:00+00:00","CommandLine":null,"UserSid":"S-1-5-21-TEST","Source":"fixture","Detail":""}
+{"Kind":"snapshot","Utc":"2026-01-01T00:00:01+00:00","Pid":101,"ParentPid":100,"Name":"powershell.exe","Path":"C:\\Synthetic\\powershell.exe","StartUtc":"2026-01-01T00:00:01+00:00","CommandLine":"\u003Cscript\u003Ealert(\u0027fixture\u0027)\u003C/script\u003E","UserSid":null,"Source":"fixture","Detail":""}

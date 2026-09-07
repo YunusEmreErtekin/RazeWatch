@@ -1,0 +1,67 @@
+[
+  {
+    "File": "analysis-summary.json",
+    "Bytes": 1144,
+    "Sha256": "7A13E9AD4C44D5CAD80147886FC0334048258A96189C1F80A990F0FE012065C5"
+  },
+  {
+    "File": "collection-log.jsonl",
+    "Bytes": 229,
+    "Sha256": "95848ABD56BB68E2462AFB3EB3A3B06D05CE53AA191682005DBFA453C6C93E83"
+  },
+  {
+    "File": "collector-identities.json",
+    "Bytes": 2,
+    "Sha256": "4F53CDA18C2BAA0C0354BB5F9A3ECBE5ED12AB4D8E11BA873C2F11161202B945"
+  },
+  {
+    "File": "endpoint-episodes.json",
+    "Bytes": 104,
+    "Sha256": "D5EF6ED955326745C9430C864C60095B9543CDD1B6D33847880F89DE7F9C0921"
+  },
+  {
+    "File": "findings.json",
+    "Bytes": 602,
+    "Sha256": "673BB611E8B5647B5AFDF6F6889C3F5B9A35B5A98B6F92F2086BCB7896CAAD74"
+  },
+  {
+    "File": "flows.csv",
+    "Bytes": 291,
+    "Sha256": "CA38EE1524451985907E1FC1BE0FC95BE8F45A400C47A82C5735CCB8C60D2FF4"
+  },
+  {
+    "File": "flows.jsonl",
+    "Bytes": 243,
+    "Sha256": "E90030C28E913E8C354F298DAB08709DF2834B9B20EB5629EC2962E39CD200D0"
+  },
+  {
+    "File": "inventory-diff.json",
+    "Bytes": 2,
+    "Sha256": "4F53CDA18C2BAA0C0354BB5F9A3ECBE5ED12AB4D8E11BA873C2F11161202B945"
+  },
+  {
+    "File": "process-identities.json",
+    "Bytes": 595,
+    "Sha256": "8F1B683ED82749B5F11B61D8BF5BE3152A0815A47D3C26F3DF2B72F8C6169ED2"
+  },
+  {
+    "File": "processes.jsonl",
+    "Bytes": 556,
+    "Sha256": "9C1DFF6B215E25758445E32B62181033A7B31CA9351BC9C2EC5D0D841B203B4B"
+  },
+  {
+    "File": "report.html",
+    "Bytes": 5210,
+    "Sha256": "A15F7223D4FE5E95B52ADECDB45CBFC199F36D93E757E9EB3EFE4C8579A49A57"
+  },
+  {
+    "File": "session.json",
+    "Bytes": 409,
+    "Sha256": "F15D60B76F0617450AA8A976B351538E40E6DF5D27EC8A539D07390B834BA6CC"
+  },
+  {
+    "File": "timeline.jsonl",
+    "Bytes": 161,
+    "Sha256": "8D00965539FE04F04E213E5BD3187619EE1399CD47298B9EB3FE7A4581526725"
+  }
+]

@@ -1,0 +1,2 @@
+﻿utc,protocol,pid,local_address,local_port,remote_address,remote_port,state,identity,confidence,collector_pid_observed
+"2026-01-01T00:00:02.0000000+00:00","TCP","101","192.0.2.1","50000","203.0.113.7","443","5","101@2026-01-01T00:00:01.0000000+00:00","consistent-owner-pid","False"

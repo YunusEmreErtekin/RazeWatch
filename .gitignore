@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+dist/
+*.user
+private-runs/
+collections/
+*.evtx
+*.etl
+*.pcap*
+*.zip

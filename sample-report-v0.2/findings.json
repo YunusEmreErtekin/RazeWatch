@@ -1,0 +1,16 @@
+[
+  {
+    "Rule": "ioc-ip",
+    "Severity": "review",
+    "Reason": "Observed TCP remote endpoint exactly matches supplied IP; no C2 verdict.",
+    "Evidence": "flows.csv",
+    "Identity": "101@2026-01-01T00:00:01.0000000\u002B00:00"
+  },
+  {
+    "Rule": "office-script-network",
+    "Severity": "review",
+    "Reason": "Single lifetime-compatible Office parent, script child and observed TCP endpoint. Investigate business context; parent linkage uses sampled PID/lifetime evidence.",
+    "Evidence": "processes.jsonl",
+    "Identity": "101@2026-01-01T00:00:01.0000000\u002B00:00"
+  }
+]

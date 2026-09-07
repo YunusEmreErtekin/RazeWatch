@@ -1,0 +1,1 @@
+{"Module":"fixture-sensor","StartUtc":"2026-01-01T00:00:00+00:00","EndUtc":"2026-01-01T00:10:00+00:00","Status":"success","ExitCode":0,"Records":3,"Detail":"Synthetic only; no real device evidence.","Stdout":null,"Stderr":null}

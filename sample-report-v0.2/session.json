@@ -1,0 +1,19 @@
+{
+  "SchemaVersion": 1,
+  "Synthetic": true,
+  "RequestedSeconds": 600,
+  "MeasuredObservationSeconds": 600,
+  "Partial": false,
+  "Options": {
+    "Seconds": 600,
+    "HistoryHours": 24,
+    "EventLimit": 1000,
+    "MaxMiB": 256,
+    "Output": null,
+    "Ioc": "203.0.113.7",
+    "Incident": "",
+    "Note": "Tamamen sentetik \u00F6rnek",
+    "Synthetic": false,
+    "NoPacket": false
+  }
+}

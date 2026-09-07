@@ -1,0 +1,1 @@
+{"Utc":"2026-01-01T00:00:02+00:00","EndUtc":"2026-01-01T00:00:02.0099999+00:00","Protocol":"TCP","Family":4,"Pid":101,"LocalAddress":"192.0.2.1","LocalPort":50000,"RemoteAddress":"203.0.113.7","RemotePort":443,"State":"5","Source":"fixture"}

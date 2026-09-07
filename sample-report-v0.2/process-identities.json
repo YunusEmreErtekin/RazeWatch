@@ -1,0 +1,24 @@
+[
+  {
+    "Id": "100@2026-01-01T00:00:00.0000000\u002B00:00",
+    "Pid": 100,
+    "ParentPid": 4,
+    "Birth": "2026-01-01T00:00:00+00:00",
+    "End": null,
+    "Name": "EXCEL.EXE",
+    "Path": "C:\\Synthetic\\EXCEL.EXE",
+    "Source": "creation-time",
+    "ExactBirth": true
+  },
+  {
+    "Id": "101@2026-01-01T00:00:01.0000000\u002B00:00",
+    "Pid": 101,
+    "ParentPid": 100,
+    "Birth": "2026-01-01T00:00:01+00:00",
+    "End": null,
+    "Name": "powershell.exe",
+    "Path": "C:\\Synthetic\\powershell.exe",
+    "Source": "creation-time",
+    "ExactBirth": true
+  }
+]

@@ -20,18 +20,20 @@ public sealed class Collector
         using var observation = CancellationTokenSource.CreateLinkedTokenSource(userStop);
         using var inventoryStop = CancellationTokenSource.CreateLinkedTokenSource(userStop);
         using var processes = new Processes(e);
+        using var icmp = new Icmp(e);
         var created = DateTimeOffset.UtcNow; var watch = new Stopwatch(); bool packetOwned = false; bool partial = false;
         Evidence.ExternalBudget? packetBudget = null;
         DateTimeOffset? observationStart = null, observationEnd = null; string reason = "duration-complete";
         long polls = 0, errors = 0; double maxGap = 0, cpuSeconds = 0; long peakWorkingSet = 0;
         Task inventory = Task.CompletedTask, network = Task.CompletedTask, snapshots = Task.CompletedTask, synthetic = Task.CompletedTask, pulses = Task.CompletedTask;
         bool admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-        e.Save("capabilities.json", new { SchemaVersion = 1, Version = "0.2.0", Os = Environment.OSVersion.VersionString, Architecture = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString(), Admin = admin, CollectorPid = Environment.ProcessId, CollectorBirthUtc = Process.GetCurrentProcess().StartTime.ToUniversalTime(), Utc = created, TimeZone = TimeZoneInfo.Local.Id,
-            PowerShell = File.Exists(Path.Combine(Environment.SystemDirectory, "WindowsPowerShell/v1.0/powershell.exe")), Network = "IPHelper IPv4+IPv6 TCP/UDP snapshots; remote UDP unavailable", Process = "WMI start/stop requested; actual status in collection-log", Privacy = "No packet payload, credentials/cookies/keys/dumps. Event text and commandlines may incidentally contain sensitive data. No upload." });
+        e.Save("capabilities.json", new { SchemaVersion = 1, Version = "0.3.0", Os = Environment.OSVersion.VersionString, Architecture = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString(), Admin = admin, CollectorPid = Environment.ProcessId, CollectorBirthUtc = Process.GetCurrentProcess().StartTime.ToUniversalTime(), Utc = created, TimeZone = TimeZoneInfo.Local.Id,
+            PowerShell = File.Exists(Path.Combine(Environment.SystemDirectory, "WindowsPowerShell/v1.0/powershell.exe")), Network = "IPHelper IPv4+IPv6 TCP/UDP snapshots; remote UDP unavailable; ICMP via WFP Security events (audit required)", Process = "WMI start/stop requested; actual status in collection-log", Privacy = "No packet payload, credentials/cookies/keys/dumps. Event text and commandlines may incidentally contain sensitive data. No upload." });
         try
         {
             Progress?.Invoke("Yetenek kontrolü; canlı sensörler başlatılıyor…");
             processes.Start();
+            icmp.Start();
             observationStart = DateTimeOffset.UtcNow; watch.Start();
             network = Task.Run(async () => {
                 double previous = watch.Elapsed.TotalSeconds;
@@ -99,6 +101,7 @@ public sealed class Collector
             Progress?.Invoke("Canlı sensörler durduruluyor; kısmi veriler korunuyor…");
             try { await Task.WhenAll(network, snapshots, synthetic, pulses); } catch (Exception ex) { e.Status(new Health("sensor-shutdown", created, DateTimeOffset.UtcNow, "error", ex.HResult, 0, ex.Message)); partial = true; }
             await processes.Stop();
+            icmp.Dispose();
             if (packetOwned)
             {
                 await Commands.Run(e, "pktmon-counters", Path.Combine(Environment.SystemDirectory, "pktmon.exe"), new[] { "counters" }, 10, CancellationToken.None);

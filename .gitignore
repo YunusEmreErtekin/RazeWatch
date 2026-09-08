@@ -8,3 +8,4 @@ collections/
 *.etl
 *.pcap*
 *.zip
+!downloads/RazeWatch-0.3-win-x64.zip

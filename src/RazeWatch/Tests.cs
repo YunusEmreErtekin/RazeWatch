@@ -9,6 +9,7 @@ public static class Tests
     {
         int count = 0;
         void Check(bool ok, string name) { if (!ok) throw new Exception("FAIL: " + name); Console.WriteLine("PASS " + name); count++; }
+        IcmpTests.Run(Check);
         var t = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
         Proc P(string kind, int pid, int sec, DateTimeOffset? birth = null) => new(kind, t.AddSeconds(sec), pid, 1, "fixture.exe", "C:\\örnek\\fixture.exe", birth, null, null, "fixture", "");
         Flow F(int sec) => new(t.AddSeconds(sec), t.AddSeconds(sec).AddMilliseconds(10), "TCP", 4, 42, "127.0.0.1", 2345, "127.0.0.1", 1234, "5", "fixture");

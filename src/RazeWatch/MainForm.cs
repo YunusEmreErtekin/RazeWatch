@@ -22,8 +22,16 @@ public sealed class MainForm : Form
         var layout = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false, Padding = new Padding(22), AutoScroll = true };
         Label LabelText(string text, bool title = false) => new() { Text = text, AutoSize = true, Margin = new Padding(3, 6, 3, 6), Font = title ? new Font(Font.FontFamily, 20, FontStyle.Bold) : Font };
         var title = LabelText("10 dakikalık yerel gözlem", true);
-        var privacy = LabelText("Kapsam: süreç olayları, TCP/UDP uçları, sistem/kalıcılık envanteri ve mevcut olay günlükleri. İlk 2 dakika boşta, ardından normal çalışma; son dakikalarda tekrar boşta kalabilirsiniz.\n\nVeriler cihazda kalır. Komut satırı, dosya yolları, IP/DNS, kullanıcı SID ve günlük metni hassas olabilir. Parola/cookie/token/anahtar depoları, paket içeriği, RAM ve disk imajı toplanmaz. Günlüklerde tesadüfen hassas metin bulunabilir. Yönetici yoksa eksik kapsam raporlanır.");
+        var privacy = LabelText("Kapsam: süreç olayları, TCP/UDP uçları, ICMP izin/engel olayları, sistem/kalıcılık envanteri ve mevcut olay günlükleri. İlk 2 dakika boşta, ardından normal çalışma; son dakikalarda tekrar boşta kalabilirsiniz.\n\nVeriler cihazda kalır. Komut satırı, dosya yolları, IP/DNS, kullanıcı SID ve günlük metni hassas olabilir. Parola/cookie/token/anahtar depoları, paket içeriği, RAM ve disk imajı toplanmaz. Günlüklerde tesadüfen hassas metin bulunabilir. Yönetici yoksa eksik kapsam raporlanır.");
         privacy.Name = "Privacy"; layout.Controls.Add(title); layout.Controls.Add(privacy);
+        var icmpHelp = new Button { Text = "ICMP denetimini kontrol et / hazırlık", AutoSize = true };
+        icmpHelp.Click += (_, _) => {
+            string state;
+            try { uint flags = AuditPolicy.FilteringConnectionFlags(); state = $"İzin olayları: {((flags & 1) != 0 ? "açık" : "kapalı")}; engel olayları: {((flags & 2) != 0 ? "açık" : "kapalı")}."; }
+            catch (Exception ex) { state = "Denetim durumu okunamadı: " + ex.Message; }
+            MessageBox.Show(this, state + "\n\nICMP için yönetici olarak çalıştırın. Denetim kapalıysa README içindeki ICMP hazırlık adımlarını uygulayın; program Windows denetim ayarlarını değiştirmez.\n\nIOC alanına hedef IP'leri girin. Çalışma sonunda raporun ICMP tablosunda uygulama, PID, hedef ve izin/engel bilgisi görünür. Kayıt olmaması trafik olmadığı anlamına gelmez.", "ICMP hazırlığı");
+        };
+        layout.Controls.Add(icmpHelp);
         layout.Controls.Add(LabelText("IOC — IP, domain veya SHA256; virgülle ayırın (isteğe bağlı)")); layout.Controls.Add(ioc);
         layout.Controls.Add(LabelText("Olay zamanı — örnek: 2026-09-07T14:30:00+03:00 (isteğe bağlı)")); layout.Controls.Add(incident);
         layout.Controls.Add(LabelText("Olay notu — parola veya token yazmayın (isteğe bağlı)")); layout.Controls.Add(note);

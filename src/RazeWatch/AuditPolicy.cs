@@ -3,6 +3,16 @@ using System.Runtime.InteropServices;
 namespace RazeWatch;
 public static class AuditPolicy
 {
+    public const string FilteringConnectionGuid = "{0CCE9226-69AE-11D9-BED3-505054503030}";
+    public static uint FilteringConnectionFlags()
+    {
+        IntPtr guid = Marshal.AllocHGlobal(16), policies = IntPtr.Zero;
+        try {
+            Marshal.StructureToPtr(new Guid(FilteringConnectionGuid), guid, false);
+            if (!AuditQuerySystemPolicy(guid, 1, out policies)) throw new Win32Exception(Marshal.GetLastWin32Error());
+            return Marshal.PtrToStructure<Policy>(policies).Flags;
+        } finally { Marshal.FreeHGlobal(guid); if (policies != IntPtr.Zero) AuditFree(policies); }
+    }
     [StructLayout(LayoutKind.Sequential)] struct Policy {public Guid Subcategory;public uint Flags;public Guid Category;}
     [DllImport("advapi32.dll",SetLastError=true)] [return:MarshalAs(UnmanagedType.U1)] static extern bool AuditEnumerateSubCategories(IntPtr category,[MarshalAs(UnmanagedType.U1)]bool all,out IntPtr guids,out uint count);
     [DllImport("advapi32.dll",SetLastError=true)] [return:MarshalAs(UnmanagedType.U1)] static extern bool AuditQuerySystemPolicy(IntPtr guids,uint count,out IntPtr policies);

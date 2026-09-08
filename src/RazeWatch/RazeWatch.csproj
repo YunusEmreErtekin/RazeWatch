@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType><TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier><SelfContained>true</SelfContained>
-    <Version>0.2.0</Version><ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>0.3.0</Version><ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup><PackageReference Include="System.Management" Version="8.0.0" /></ItemGroup>
   <ItemGroup><None Update="inventory.ps1" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>

@@ -66,6 +66,7 @@ public static class Analysis
         e.CloseStreams();
         var raw = Read<Proc>(e.FilePath("processes.jsonl")); var ids = Identities(raw);
         var findings = new List<Finding>();
+        string icmpHtml = Icmp.Report(e, opts, findings);
         var roots=Read<JsonElement>(e.FilePath("collector-children.jsonl")).Where(x=>x.TryGetProperty("BirthUtc",out _)).Select(x=>(x.GetProperty("Pid").GetInt32(),x.GetProperty("BirthUtc").GetDateTimeOffset())).ToList();
         if(File.Exists(e.FilePath("capabilities.json"))) {using var cap=JsonDocument.Parse(File.ReadAllText(e.FilePath("capabilities.json")));if(cap.RootElement.TryGetProperty("CollectorBirthUtc",out var birth))roots.Add((cap.RootElement.GetProperty("CollectorPid").GetInt32(),birth.GetDateTimeOffset()));}
         var children=CollectorIdentities(ids,roots);var episodes=new Episodes();
@@ -146,6 +147,7 @@ public static class Analysis
         e.Save("analysis-summary.json", new { ProcessIdentities = ids.Count, RawProcessRecords = raw.Count, FlowObservations = flowCount, UncertainFlowObservations = unresolved, Findings = findings.Count, Rules = new { ManyRemoteIps = 20, ManyRemotePorts = 10, IncidentWindowMinutes = 15, PersistenceChangeCount = 1 }, Limitations = Limitations });
         var sb = new StringBuilder("<!doctype html><html lang=tr><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta http-equiv=Content-Security-Policy content=\"default-src 'none'; style-src 'unsafe-inline'; img-src 'none'; base-uri 'none'; form-action 'none'\"><title>RazeWatch gözlem raporu</title><style>body{font:15px system-ui;background:#111827;color:#e5e7eb;margin:32px;max-width:1400px}a{color:#7dd3fc}h1,h2{color:#a7f3d0}table{border-collapse:collapse;width:100%;margin:16px 0}td,th{border:1px solid #374151;padding:8px;text-align:left;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere}.warn{border-left:4px solid #fbbf24;padding:12px}summary{cursor:pointer}small{color:#9ca3af}</style><h1>RazeWatch • canlı gözlem</h1>");
         sb.Append("<p>Offline inceleme raporu. Gözlenen davranışlar güvenlik hükmü değildir.</p><div class=warn>" + Html(Limitations) + "</div>");
+        sb.Append(icmpHtml);
         sb.Append("<h2>Oturum ve olay girdisi</h2><pre>" + Html(JsonSerializer.Serialize(session, new JsonSerializerOptions { WriteIndented = true })) + "</pre>");
         sb.Append($"<p>{ids.Count} süreç kimliği · {flowCount} uç gözlemi · {unresolved} belirsiz ilişki · {findings.Count} inceleme kaydı</p><h2>Bulgular</h2><table><tr><th>Kural / öncelik<th>Gerekçe<th>Kanıt");
         foreach (var f in findings.Take(500)) sb.Append("<tr><td>" + Html(f.Rule + " / " + f.Severity) + "<td>" + Html(f.Reason + " " + f.Identity) + "<td><a href='" + Html(Uri.EscapeDataString(f.Evidence)) + "'>" + Html(f.Evidence) + "</a>");

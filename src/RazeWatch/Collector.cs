@@ -14,7 +14,7 @@ public sealed class Collector
     public void Mark(string text) => evidence?.Write("timeline.jsonl", new { Utc = DateTimeOffset.UtcNow, Kind = "user-mark", Text = text.Length > 2000 ? text[..2000] : text });
     public async Task<string> Run(Options o, CancellationToken userStop)
     {
-        var root = o.Output ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RazeWatch", "collections", DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + "-" + Guid.NewGuid().ToString("N")[..8]);
+        var root = o.Output ?? Path.Combine(AppContext.BaseDirectory, "collections", DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + "-" + Guid.NewGuid().ToString("N")[..8]);
         using var e = new Evidence(root, o.MaxMiB); evidence = e;
         ResourceLimits.Activate(e);
         using var observation = CancellationTokenSource.CreateLinkedTokenSource(userStop);

@@ -30,10 +30,10 @@ dotnet publish src\RazeWatch\RazeWatch.csproj -c Release -r win-x64 --self-conta
 
 ## Çıktı
 
-Rapor ve toplama dosyaları varsayılan olarak şu klasöre yazılır:
+Rapor ve toplama dosyaları, `RazeWatch.exe` dosyasının bulunduğu klasörün içindeki `collections` klasörüne yazılır. Her çalıştırma için ayrı bir oturum klasörü oluşturulur:
 
 ```text
-%LOCALAPPDATA%\RazeWatch\collections\<oturum-klasörü>
+<RazeWatch.exe klasörü>\collections\<oturum-klasörü>
 ```
 
 Özel bir çıktı klasörü belirtmek için örnek:
